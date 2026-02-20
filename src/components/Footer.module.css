@@ -1,0 +1,32 @@
+.footer {
+  background: var(--contact-bg);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 22px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  transition: background 0.6s ease;
+}
+
+.footer p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.25);
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  color: var(--terracotta);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 24px;
+    gap: 6px;
+  }
+}

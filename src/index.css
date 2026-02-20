@@ -1,0 +1,251 @@
+/* ══ LIGHT MODE (day) ══ */
+:root {
+  --cream: #F5EDD8;
+  --warm-white: #FAF6EE;
+  --terracotta: #C8684A;
+  --rust: #A3432B;
+  --sage: #7A9E7E;
+  --sage-dark: #6B9070;
+  --sage-light: #B8D4BC;
+  --mustard: #D4A843;
+  --brown: #6B4226;
+  --dark: #2C1810;
+  --pink: #E8A0A0;
+  --blue-muted: #8AABBF;
+
+  --bg-primary: #F5EDD8;
+  --bg-secondary: #FAF6EE;
+  --bg-card: #FAF6EE;
+  --bg-inset: #F5EDD8;
+  --text-primary: #2C1810;
+  --text-secondary: #6B4226;
+  --text-muted: rgba(107,66,38,0.55);
+  --border: rgba(107,66,38,0.08);
+  --border-strong: rgba(107,66,38,0.14);
+  --pill-bg: rgba(200,104,74,0.08);
+  --pill-color: #A3432B;
+  --pill-border: rgba(200,104,74,0.16);
+  --nav-bg: rgba(245,237,216,0.88);
+  --scrollbar-thumb: #B8D4BC;
+  --contact-bg: #2C1810;
+  --contact-text: #F5EDD8;
+}
+
+/* ══ DARK MODE (night) ══ */
+[data-theme="dark"] {
+  --bg-primary: #0D1117;
+  --bg-secondary: #131920;
+  --bg-card: #161E27;
+  --bg-inset: #0D1117;
+  --text-primary: #E8DCC8;
+  --text-secondary: #A89880;
+  --text-muted: rgba(232,220,200,0.4);
+  --border: rgba(232,220,200,0.06);
+  --border-strong: rgba(232,220,200,0.1);
+  --pill-bg: rgba(200,104,74,0.12);
+  --pill-color: #E8956A;
+  --pill-border: rgba(200,104,74,0.22);
+  --nav-bg: rgba(13,17,23,0.92);
+  --scrollbar-thumb: #2A3A4A;
+  --contact-bg: #0A0E14;
+  --contact-text: #E8DCC8;
+  --cream: #0D1117;
+  --warm-white: #131920;
+  --dark: #E8DCC8;
+  --brown: #A89880;
+  --terracotta: #D97B5A;
+  --rust: #E8956A;
+  --sage: #6B9E7E;
+  --sage-light: #1E2E24;
+  --mustard: #C99A35;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
+
+/* ── CURSOR ── */
+.cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--terracotta);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s, background 0.2s, width 0.2s, height 0.2s;
+}
+.cursor.hovered {
+  width: 20px;
+  height: 20px;
+  background: rgba(200,104,74,0.4);
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--terracotta);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+@keyframes shadowPulse {
+  0%, 100% { width: 160px; opacity: 0.25; }
+  50%       { width: 120px; opacity: 0.12; }
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50%       { transform: rotate(45deg) translateY(5px); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50%       { opacity: 0.2; transform: scale(0.5); }
+}
+
+  50%       { box-shadow: 0 0 36px 12px rgba(200,220,255,0.28); }
+}
+@keyframes shootingStar {
+  0%   { transform: translateX(0) translateY(0) rotate(-30deg); opacity: 1; }
+  100% { transform: translateX(-300px) translateY(150px) rotate(-30deg); opacity: 0; }
+}
+
+/* ── SECTION REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── SECTION BASE ── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 14px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--terracotta);
+  border-radius: 2px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  transition: color 0.6s ease;
+}
+
+/* ── TECH PILLS ── */
+.tech-pill {
+  font-size: 0.74rem;
+  background: var(--pill-bg);
+  color: var(--pill-color);
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-weight: 500;
+  border: 1px solid var(--pill-border);
+  transition: all 0.2s;
+  cursor: default;
+}
+.tech-pill:hover {
+  background: var(--terracotta);
+  color: white;
+  border-color: var(--terracotta);
+}
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── NIGHT SKY STARS (injected via JS) ── */
+.stars-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+[data-theme="dark"] .stars-layer {
+  opacity: 1;
+}
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration, 3s) var(--delay, 0s) infinite;
+}
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 1.5px;
+  background: linear-gradient(90deg, white, transparent);
+  border-radius: 2px;
+  animation: shootingStar 2.5s ease-in infinite;
+  animation-delay: var(--delay, 4s);
+  opacity: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
