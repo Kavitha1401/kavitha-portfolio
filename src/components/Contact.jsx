@@ -2,21 +2,45 @@ import { useState } from 'react'
 import useReveal from './useReveal'
 import styles from './Contact.module.css'
 
+const FORMSPREE_URL = 'https://formspree.io/f/xdalwpqg'
+
 const links = [
   { icon: '✉️', label: 'kavithareddy1401@gmail.com', href: 'mailto:kavithareddy1401@gmail.com' },
-  { icon: '🐙', label: 'github.com/B-Kavitha', href: 'https://github.com/B-Kavitha' },
-  { icon: '💼', label: 'linkedin.com/in/b-kavitha', href: 'https://linkedin.com/in/b-kavitha' },
+  { icon: '🐙', label: 'github.com/', href: 'https://github.com/Kavitha1401' },
+  { icon: '💼', label: 'linkedin.com/', href: 'https://linkedin.com/in/b-kavitha' },
   { icon: '📱', label: '+91 86183 63350', href: 'tel:+918618363350' },
 ]
 
 export default function Contact() {
   const ref = useReveal()
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
+    setStatus('sending')
+
+    const formData = new FormData(e.target)
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      })
+
+      if (res.ok) {
+        setStatus('sent')
+        e.target.reset()
+        // Reset back to idle after 4 seconds
+        setTimeout(() => setStatus('idle'), 4000)
+      } else {
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 4000)
+      }
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 4000)
+    }
   }
 
   return (
@@ -36,18 +60,25 @@ export default function Contact() {
         <form className={`${styles.form} reveal`} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>Your Name</label>
-            <input type="text" placeholder="Ada Lovelace" required />
+            <input type="text" name="name" placeholder="Ada Lovelace" required />
           </div>
           <div className={styles.formGroup}>
             <label>Email Address</label>
-            <input type="email" placeholder="ada@example.com" required />
+            <input type="email" name="email" placeholder="ada@example.com" required />
           </div>
           <div className={styles.formGroup}>
             <label>Message</label>
-            <textarea rows="5" placeholder="Tell me about your project or idea..." required />
+            <textarea name="message" rows="5" placeholder="Tell me about your project or idea..." required />
           </div>
-          <button type="submit" className={styles.submitBtn}>
-            {sent ? '✓ Message Sent!' : 'Send Message ✨'}
+          <button
+            type="submit"
+            className={styles.submitBtn}
+            disabled={status === 'sending'}
+          >
+            {status === 'idle'    && 'Send Message ✨'}
+            {status === 'sending' && 'Sending...'}
+            {status === 'sent'    && '✓ Message Sent!'}
+            {status === 'error'   && 'Something went wrong — try again'}
           </button>
         </form>
 

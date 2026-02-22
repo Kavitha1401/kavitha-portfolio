@@ -1,10 +1,6 @@
 // App.jsx
-// Coordinates the character phase transitions:
-//   'wave'     → shown during IntroOverlay
-//   'glasses'  → immediately after intro dismisses (glasses drop in)
-//   'keyboard' → 750ms later (keyboard + platform rise up)
-//   'typing'   → 1250ms later (settle, start glow animation)
-// heroReady (true after 1600ms) reveals the hero content.
+// After intro dismisses, hero immediately shows the focused/typing character.
+// No wave → glasses → keyboard sequence needed.
 
 import { useState } from 'react'
 import { ThemeProvider } from './ThemeContext'
@@ -23,21 +19,10 @@ import IntroOverlay from './components/IntroOverlay'
 import CompanionCharacter from './components/CompanionCharacter'
 
 export default function App() {
-  const [introDone, setIntroDone]       = useState(false)
-  const [charPhase, setCharPhase]       = useState('wave')
+  const [introDone, setIntroDone] = useState(false)
 
   const handleIntroDone = () => {
-    // Step 1: glasses fall in
-    setCharPhase('glasses')
-
-    // Step 2: keyboard + platform rise
-    setTimeout(() => setCharPhase('keyboard'), 750)
-
-    // Step 3: settle into typing
-    setTimeout(() => setCharPhase('typing'),   1250)
-
-    // Step 4: reveal the rest of the hero
-    setTimeout(() => setIntroDone(true),        1600)
+    setIntroDone(true)
   }
 
   return (
@@ -49,13 +34,11 @@ export default function App() {
       {/* Intro overlay — shown before hero */}
       {!introDone && <IntroOverlay onDone={handleIntroDone} />}
 
-      {/* Main site — always mounted so scroll/layout is ready.
-          Hero is visible as soon as charPhase advances (overlay fading out),
-          rest of page reveals after introDone */}
-      <div style={{ visibility: charPhase !== 'wave' ? 'visible' : 'hidden' }}>
+      {/* Main site — always mounted so scroll/layout is ready. */}
+      <div style={{ visibility: introDone ? 'visible' : 'hidden' }}>
         <Nav />
-        {/* Pass charPhase so Hero can relay it to Character */}
-        <Hero charPhase={charPhase} />
+        {/* Always show focused/typing character in hero */}
+        <Hero charPhase="typing" />
         <About />
         <Experience />
         <Skills />

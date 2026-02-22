@@ -1,67 +1,97 @@
 /* ── CORNER COMPANION ── */
 .corner {
   position: fixed;
-  bottom: 28px;
-  left: 28px;
+  bottom: 0px;
+  left: 10px;
   z-index: 400;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
 }
 
+/* Button is relative — bubble is absolute inside it */
 .companionBtn {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   position: relative;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
+  display: block;
   outline: none;
 }
 
 .companionChar {
-  width: 88px;
-  height: 105px;
-  filter: drop-shadow(0 8px 20px rgba(107,66,38,0.18));
-  transition: transform 0.3s cubic-bezier(.175,.885,.32,1.275);
+  width: 120px;
+  height: 130px;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(107,66,38,0.2));
   animation: companionFloat 3.5s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(.175,.885,.32,1.275);
 }
 
 .companionBtn:hover .companionChar {
-  transform: translateY(-6px) scale(1.04);
+  transform: translateY(-5px) scale(1.04);
 }
 
 .companionBtnActive .companionChar {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   animation: none;
 }
 
 @keyframes companionFloat {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
+  50%       { transform: translateY(-7px); }
 }
 
-/* speech bubble */
-.bubble {
-  background: var(--bg-card, #FAF6EE);
-  border: 1.5px solid var(--border, rgba(107,66,38,0.08));
-  border-radius: 16px 16px 16px 4px;
-  padding: 8px 14px;
+/*
+  Bubble is absolute over the image.
+  focused.png has the character sitting in the lower-centre of the image.
+  Place bubble above the character's head area, tail pointing DOWN.
+*/
+.companionBubble {
+  position: absolute;
+  /* sit above the character's head — roughly top 20% of image */
+  bottom: 95%;
+  /* centre-right over the character */
+  left: 50%;
+  z-index: 2;
+
+  background: var(--bg-secondary, #FAF6EE);
+  border: 1.5px solid var(--terracotta, #C8684A);
+  border-radius: 12px;
+  padding: 7px 13px;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--text-secondary, #6B4226);
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  position: relative;
-  margin-bottom: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  pointer-events: none;
   animation: bubblePop 0.4s cubic-bezier(.175,.885,.32,1.275) both;
 }
 
+/* Tail pointing DOWN toward character head */
+.companionBubble::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 16px;
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 9px solid var(--terracotta, #C8684A);
+}
+.companionBubble::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 18px;
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 7px solid var(--bg-secondary, #FAF6EE);
+  z-index: 1;
+}
+
 @keyframes bubblePop {
-  from { opacity: 0; transform: scale(0.8) translateY(8px); }
+  from { opacity: 0; transform: scale(0.8) translateY(6px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -69,7 +99,7 @@
 .chatPanel {
   position: absolute;
   bottom: calc(100% + 12px);
-  left: 0;
+  left: 20px;
   width: 320px;
   background: var(--bg-secondary, #FAF6EE);
   border: 1.5px solid var(--border-strong, rgba(107,66,38,0.1));
@@ -130,11 +160,7 @@
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
 }
-
-.chatClose:hover {
-  background: var(--terracotta);
-  color: white;
-}
+.chatClose:hover { background: var(--terracotta); color: white; }
 
 .chatMessages {
   flex: 1;
@@ -191,7 +217,6 @@
   50%       { transform: translateY(-5px); opacity: 1; }
 }
 
-/* suggestions */
 .suggestions {
   display: flex;
   flex-direction: column;
@@ -212,14 +237,8 @@
   transition: all 0.2s;
   font-family: 'DM Sans', sans-serif;
 }
+.suggestion:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
 
-.suggestion:hover {
-  background: var(--terracotta);
-  color: white;
-  border-color: var(--terracotta);
-}
-
-/* input */
 .chatInput {
   display: flex;
   gap: 8px;
@@ -241,11 +260,7 @@
   outline: none;
   transition: border-color 0.2s;
 }
-
-.chatInput input:focus {
-  border-color: var(--terracotta);
-}
-
+.chatInput input:focus { border-color: var(--terracotta); }
 .chatInput input::placeholder { color: var(--text-muted); opacity: 0.6; }
 
 .sendBtn {
@@ -262,19 +277,11 @@
   transition: all 0.2s;
   transform: rotate(90deg);
 }
-
-.sendBtn:hover:not(:disabled) {
-  background: var(--rust);
-  transform: rotate(90deg) scale(1.1);
-}
-
-.sendBtn:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
+.sendBtn:hover:not(:disabled) { background: var(--rust); transform: rotate(90deg) scale(1.1); }
+.sendBtn:disabled { opacity: 0.4; cursor: default; }
 
 @media (max-width: 480px) {
-  .corner { left: 16px; bottom: 16px; }
-  .chatPanel { width: calc(100vw - 32px); }
-  .companionChar { width: 72px; height: 86px; }
+  .corner { left: 14px; bottom: 14px; }
+  .companionChar { width: 96px; height: 104px; }
+  .chatPanel { width: calc(100vw - 28px); }
 }

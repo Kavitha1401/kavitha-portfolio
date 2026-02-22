@@ -26,7 +26,7 @@ export default function Hero({ charPhase = 'typing' }) {
         <em>B Kavitha</em>
         </h1>
         <p className={styles.title} style={{ animationDelay: '0.5s' }}>
-          Full Stack &amp; Financial Systems Engineer
+          Full Stack Engineer · AI &amp; Backend Systems
         </p>
         <p className={styles.tagline} style={{ animationDelay: '0.65s' }}>
           "I build systems that scale and make sense."

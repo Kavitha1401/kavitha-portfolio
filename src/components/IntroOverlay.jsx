@@ -2,7 +2,8 @@
 // Phase flow: 'enter' → 'wave' → (user clicks/scrolls) → 'exit'
 // On exit: fires onDone(phase) so App can sequence glasses/keyboard transitions
 //
-// Uses wave.svg + bubble.svg directly as <img> for the intro character.
+// Uses wave.svg directly as <img> for the intro character.
+// Speech bubble is an inline HTML element with actual text.
 
 import { useEffect, useState } from 'react'
 import styles from './IntroOverlay.module.css'
@@ -47,18 +48,18 @@ export default function IntroOverlay({ onDone }) {
         {/* Character area — wave pose + speech bubble */}
         <div className={`${styles.charWrap} ${phase === 'wave' ? styles.waving : ''}`}>
 
-          {/* Speech bubble — positioned above/right of character */}
-          <img
-            src="/bubble.svg"
-            alt=""
-            aria-hidden="true"
+          {/* Speech bubble with actual text */}
+          <div
             className={styles.bubble}
+            aria-hidden="true"
             style={{
               opacity: phase === 'wave' ? 1 : 0,
               transform: phase === 'wave' ? 'scale(1) translateY(0)' : 'scale(0.75) translateY(-10px)',
               transition: 'opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s',
             }}
-          />
+          >
+            <span>Hello! 👋</span>
+          </div>
 
           {/* Wave character */}
           <img
@@ -72,7 +73,7 @@ export default function IntroOverlay({ onDone }) {
         <div className={styles.textWrap}>
           <p className={styles.greeting}>Hi there! 👋</p>
           <h1 className={styles.name}>I'm <em>B Kavitha</em></h1>
-          <p className={styles.sub}>Full Stack &amp; Financial Systems Engineer</p>
+          <p className={styles.sub}>Full Stack Engineer · AI &amp; Backend Systems</p>
         </div>
 
         {/* Hint */}

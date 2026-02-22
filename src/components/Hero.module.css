@@ -1,5 +1,3 @@
-/* Hero.module.css — updated charWrap to accommodate platform + keyboard below character */
-
 .hero {
   min-height: 100vh;
   display: grid;
@@ -35,26 +33,23 @@
   position: relative;
 }
 
-/* ── UPDATED: extra height + padding-bottom so platform/keyboard
-   extend below the character without clipping ── */
 .charWrap {
-  width: 340px;
-  height: 460px;          /* was 420px — extra room for platform */
-  padding-bottom: 40px;   /* pushes character up; platform sits in padding zone */
+  width: 480px;
+  height: 580px;
   position: relative;
   animation: float 4s ease-in-out infinite;
 }
 
 .shadow {
   position: absolute;
-  bottom: 0px;            /* sits at the very base, below platform */
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 180px;           /* slightly wider to match platform */
-  height: 18px;
+  width: 220px;
+  height: 24px;
   background: rgba(107, 66, 38, 0.15);
   border-radius: 50%;
-  filter: blur(8px);
+  filter: blur(10px);
   animation: shadowPulse 4s ease-in-out infinite;
 }
 
@@ -196,6 +191,10 @@
   animation: scrollBounce 1.5s infinite;
 }
 
+@media (max-width: 1100px) {
+  .charWrap { width: 400px; height: 480px; }
+}
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -203,7 +202,7 @@
     text-align: center;
   }
   .right { padding-left: 0; align-items: center; }
-  .charWrap { width: 280px; height: 360px; padding-bottom: 32px; }
+  .charWrap { width: 300px; height: 360px; }
   .stats { justify-content: center; }
   .cta { align-self: center; }
   .tag { align-self: center; }
