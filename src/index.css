@@ -142,7 +142,6 @@ a {
 @keyframes twinkle {
   0%, 100% { opacity: 0.9; transform: scale(1); }
   50%       { opacity: 0.2; transform: scale(0.5); }
-}
 
   50%       { box-shadow: 0 0 36px 12px rgba(200,220,255,0.28); }
 }
@@ -248,4 +247,10 @@ a {
 @media (max-width: 768px) {
   body { cursor: auto; }
   .cursor, .cursor-ring { display: none; }
+}
+
+/* ── KEYBOARD GLOW (typing phase backlight) ── */
+@keyframes keyGlow {
+  0%, 100% { opacity: 0.55; transform: scaleX(1); }
+  50%       { opacity: 1;    transform: scaleX(1.08); }
 }

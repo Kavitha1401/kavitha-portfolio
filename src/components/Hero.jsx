@@ -1,7 +1,9 @@
+// Hero.jsx — accepts charPhase and passes it to Character for layered SVG transitions
+
 import Character from './Character'
 import styles from './Hero.module.css'
 
-export default function Hero() {
+export default function Hero({ charPhase = 'typing' }) {
   return (
     <section id="hero" className={styles.hero}>
       <div className={styles.blob1} />
@@ -10,7 +12,8 @@ export default function Hero() {
 
       <div className={styles.left}>
         <div className={styles.charWrap}>
-          <Character />
+          {/* Character composites wave/focused/specs/keyboard/platform SVGs */}
+          <Character phase={charPhase} />
           <div className={styles.shadow} />
         </div>
       </div>
@@ -20,7 +23,7 @@ export default function Hero() {
           ✦ Available for opportunities
         </div>
         <h1 className={styles.name} style={{ animationDelay: '0.35s' }}>
-          B<br /><em>Kavitha</em>
+        <em>B Kavitha</em>
         </h1>
         <p className={styles.title} style={{ animationDelay: '0.5s' }}>
           Full Stack &amp; Financial Systems Engineer

@@ -1,3 +1,5 @@
+/* Hero.module.css — updated charWrap to accommodate platform + keyboard below character */
+
 .hero {
   min-height: 100vh;
   display: grid;
@@ -33,19 +35,22 @@
   position: relative;
 }
 
+/* ── UPDATED: extra height + padding-bottom so platform/keyboard
+   extend below the character without clipping ── */
 .charWrap {
   width: 340px;
-  height: 420px;
+  height: 460px;          /* was 420px — extra room for platform */
+  padding-bottom: 40px;   /* pushes character up; platform sits in padding zone */
   position: relative;
   animation: float 4s ease-in-out infinite;
 }
 
 .shadow {
   position: absolute;
-  bottom: -8px;
+  bottom: 0px;            /* sits at the very base, below platform */
   left: 50%;
   transform: translateX(-50%);
-  width: 160px;
+  width: 180px;           /* slightly wider to match platform */
   height: 18px;
   background: rgba(107, 66, 38, 0.15);
   border-radius: 50%;
@@ -198,7 +203,7 @@
     text-align: center;
   }
   .right { padding-left: 0; align-items: center; }
-  .charWrap { width: 260px; height: 320px; }
+  .charWrap { width: 280px; height: 360px; padding-bottom: 32px; }
   .stats { justify-content: center; }
   .cta { align-self: center; }
   .tag { align-self: center; }
